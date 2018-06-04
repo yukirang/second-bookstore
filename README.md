@@ -2,7 +2,9 @@
 
 My first Vue.js project, trying to complete an online second bookstore.
 
-This project was initialized in May, 2018. 
+This project was initialized in late May, 2018. 
+
+Build Setup
 
 ```bash
 
