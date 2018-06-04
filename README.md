@@ -4,7 +4,7 @@ My first Vue.js project, trying to complete an online second bookstore.
 
 This project was initialized in late May, 2018. 
 
-<h2>Build Setup</h2>
+<h3>Build Setup</h3>
 ```bash
 
 $ npm install -g vue-cli
