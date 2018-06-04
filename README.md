@@ -9,9 +9,9 @@ This project was initialized in late May, 2018.
 
 $ npm install -g vue-cli
 
-$ vue init webpack my-project
+$ vue init webpack second-bookstore
 
-$ cd my-project
+$ cd second-bookstore
 
 $ npm install
 
