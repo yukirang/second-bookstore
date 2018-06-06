@@ -18,7 +18,8 @@ $ npm install
 $ npm run dev
 ```
 
-TODOLIST:
+#### TODOLIST
+
 Add time in comments
 
 Add avatar in register
