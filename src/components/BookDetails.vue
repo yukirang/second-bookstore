@@ -22,10 +22,10 @@
             </ul>
           </div><!--/.nav-collapse -->
         </div>
-  </nav>  
-  <div class="btn-gropp">  
+  </nav>
+  <div class="btn-gropp">
     <span class="btn btn-default" id="buy-request" v-on:click = "requestBook(book.id)">请求购买</span>
-  </div>  
+  </div>
 	<h1 class="page-header">
 		{{book.name}}
 	</h1>
@@ -39,15 +39,22 @@
 	<ul class="list-group">
 		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">描述：{{book.description}}</span></li>
 		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">创建者：{{book.creater}}</span></li>
-  </ul>  
-  <ul class="list-group" id="req-user">  
+  </ul>
+  <ul class="list-group" id="req-user">
     <li class="list-group-item"><span class="glyphicon glyphicon-asterisk">请求者：</span></li>
     <li class="list-group-item" v-for = "req in book.requestList"><span>{{req.name + '  ' + req.email}} </span></li>
 	</ul>
   <ul class="list-group">
-    <li class="list-group-item"><span class="btn btn-default" v-on:click = "showCommentInput()">评论</span></li>
-    <li class="list-group-item" id="comment"><input type="text" v-model="message" class="form-control" placeholder="添加评论..." required autofocus><span class="btn btn-default" v-on:click="addComment(book.id)">提交</span></li>
-    <li class="list-group-item" v-for = "comments in book.comments"><span>{{comments}}</span></li>
+    <li class="list-group-item">
+      <span class="btn btn-default" v-on:click = "showCommentInput()">评论</span>
+    </li>
+    <li class="list-group-item" id="comment">
+      <input type="text" v-model="message" class="form-control" placeholder="添加评论..." required autofocus>
+      <span class="btn btn-default" v-on:click="addComment(book.id)">提交</span>
+    </li>
+    <li class="list-group-item" v-for = "comments in book.comments">
+      <span>{{comments}}</span>
+    </li>
   </ul>
   </div>
 </template>
@@ -87,8 +94,8 @@ export default {
          this.book = response.body;
          var reqList = this.book.requestList;
          if(reqList.some(function(item){
-            
-            
+
+
             if(item.name == user.name){
               return true;
             }
@@ -98,14 +105,14 @@ export default {
               email: user.email
             }
             reqList.push(requestUser);
-           
+
             this.$http.put("http://localhost:3000/books/"+id, this.book).then(function(response){
                user.requestList.push(this.book.id);
               this.$http.put("http://localhost:3000/users/"+user.id, user).then(function(response){
                 localStorage.setItem('currentuser', JSON.stringify(user));
                 alert("请求成功！")
               })
-            })  
+            })
          }else if(user.name == this.book.creater){
             alert("不能购买自己添加的图书！");
          }else{
