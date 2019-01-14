@@ -1,21 +1,46 @@
 # second-bookstore
 
-> A Vue.js project
+My first Vue.js project, trying to complete an online second bookstore.
 
-## Build Setup
+This project was initialized in late May, 2018. 
 
-``` bash
-# install dependencies
-npm install
+### Build Setup
+```bash
 
-# serve with hot reload at localhost:8080
-npm run dev
+$ npm install -g vue-cli
 
-# build for production with minification
-npm run build
+$ vue init webpack second-bookstore
 
-# build for production and view the bundle analyzer report
-npm run build --report
+$ cd second-bookstore
+
+$ npm install
+
+$ npm run dev
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#### TODOLIST
+
+Add time in comments
+
+Add avatar in register
+
+Add img upload in register and newbook
+
+Register and Login：Better fault-tolerant
+
+Optimization on loading/DOM/request
+
+Security promblem
+
+Transform backend from json-server to nodejs
+
+Use mongoDB
+
+Add lending/requesting data visualization with ECharts/D3
+
+......
+
+
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) 
+and [docs for vue-loader](http://vuejs.github.io/vue-loader).
