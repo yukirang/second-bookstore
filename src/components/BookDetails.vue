@@ -13,18 +13,18 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li><router-link to="/books">图书</router-link></li>
-              <li><router-link to="/userpage">我的</router-link></li>
+              <li><router-link to="/books">Books</router-link></li>
+              <li><router-link to="/userpage">Mine</router-link></li>
             </ul>
 
              <ul class="nav navbar-nav">
-              <li><router-link to="/add">添加新书</router-link></li>
+              <li><router-link to="/add">Add a Book</router-link></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
   </nav>
   <div class="btn-gropp">
-    <span class="btn btn-default" id="buy-request" v-on:click = "requestBook(book.id)">请求购买</span>
+    <span class="btn btn-default" id="buy-request" v-on:click = "requestBook(book.id)">Request Purchase</span>
   </div>
 	<h1 class="page-header">
 		{{book.name}}
@@ -32,25 +32,25 @@
   <img id="book-img" v-bind:src = book.img>
   <hr>
 	<ul class="list-group">
-		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">书名：{{book.name}}</span></li>
-		<li class="list-group-item"><span class="glyphicon glyphicon-plus">作者：{{book.author}}</span></li>
+		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">Title：{{book.name}}</span></li>
+		<li class="list-group-item"><span class="glyphicon glyphicon-plus">Author：{{book.author}}</span></li>
 	</ul>
 
 	<ul class="list-group">
-		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">描述：{{book.description}}</span></li>
-		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">创建者：{{book.creater}}</span></li>
+		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">Description：{{book.description}}</span></li>
+		<li class="list-group-item"><span class="glyphicon glyphicon-asterisk">Creator：{{book.creater}}</span></li>
   </ul>
   <ul class="list-group" id="req-user">
-    <li class="list-group-item"><span class="glyphicon glyphicon-asterisk">请求者：</span></li>
+    <li class="list-group-item"><span class="glyphicon glyphicon-asterisk">Requester：</span></li>
     <li class="list-group-item" v-for = "req in book.requestList"><span>{{req.name + '  ' + req.email}} </span></li>
 	</ul>
   <ul class="list-group">
     <li class="list-group-item">
-      <span class="btn btn-default" v-on:click = "showCommentInput()">评论</span>
+      <span class="btn btn-default" v-on:click = "showCommentInput()">Comments</span>
     </li>
     <li class="list-group-item" id="comment">
-      <input type="text" v-model="message" class="form-control" placeholder="添加评论..." required autofocus>
-      <span class="btn btn-default" v-on:click="addComment(book.id)">提交</span>
+      <input type="text" v-model="message" class="form-control" placeholder="Add some comments..." required autofocus>
+      <span class="btn btn-default" v-on:click="addComment(book.id)">Submit</span>
     </li>
     <li class="list-group-item" v-for = "comments in book.comments">
       <span>{{comments}}</span>
@@ -69,17 +69,17 @@ export default {
     }
   },
   created(){
-    //一开始就获取对应id的数据展示
+    //Get the id and show at first
   	this.fetchBooks(this.$route.params.id);
     //console.log(user.name + this.book.creater);
 
   },
   methods:{
-    //获取对应id信息的数据
+    //Get the info of a book with the id
   	fetchBooks(id){
       //console.log(id);
       var user = JSON.parse(localStorage.getItem('currentuser')) ;
-　　　 //向本地接口中请求数据，然后赋值给book
+      //Request data and set it to book
       this.$http.get("http://localhost:3000/books/" + id).then(function(response){
         console.log(response);
         this.book = response.body;
@@ -110,13 +110,13 @@ export default {
                user.requestList.push(this.book.id);
               this.$http.put("http://localhost:3000/users/"+user.id, user).then(function(response){
                 localStorage.setItem('currentuser', JSON.stringify(user));
-                alert("请求成功！")
+                alert("Request succeeded！")
               })
             })
          }else if(user.name == this.book.creater){
-            alert("不能购买自己添加的图书！");
+            alert("You can't purchase your own book！");
          }else{
-            alert("你已经请求过了！");
+            alert("You have requested to buy this book!");
          }
       })
     },

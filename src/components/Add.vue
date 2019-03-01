@@ -1,6 +1,5 @@
 <template>
   <div class="add container">
-　　 <!--弹框,alert有内容进行提示，绑定message的信息为alert内容-->
   <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
@@ -14,46 +13,46 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li><router-link to="/books">图书</router-link></li>
-              <li><router-link to="/userpage">我的</router-link></li>
+              <li><router-link to="/books">Books</router-link></li>
+              <li><router-link to="/userpage">Mine</router-link></li>
             </ul>
 
              <ul class="nav navbar-nav">
-              <li><router-link to="/add">添加新书</router-link></li>
+              <li><router-link to="/add">Add a Book</router-link></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </nav>
   <Alert v-if="alert" v-bind:message="alert"></Alert>
     <!--标题-->
-	<h1 class="page-header">添加新书</h1>
+	<h1 class="page-header">Add a book</h1>
 	<form v-on:submit="addBook">
 		<div class="well">
-			<h4>图书信息</h4>
+			<h4>Info</h4>
 			<div class="form-group">
-				<label>书名</label>
+				<label>Name</label>
 				<input type="text" class="form-control" placeholder="name" v-model="book.name">
 			</div>
 			<div class="form-group">
-				<label>作者</label>
+				<label>Author</label>
 				<input type="text" class="form-control" placeholder="author" v-model="book.author">
 			</div>
 			<div class="form-group">
-				<label>描述</label>
+				<label>Description</label>
 				<input type="text" class="form-control" placeholder="description" v-model="book.description">
 			</div>
 			<div class="form-group">
-				<label>图片</label>
+				<label>Image</label>
 				<input type="text" class="form-control" placeholder="img" v-model="book.img">
 			</div>
-			<button class="btn btn-primary" type="submit">添加</button>
+			<button class="btn btn-primary" type="submit">Add</button>
 		</div>
 	</form>
   </div>
 </template>
 
 <script>
-//引入Alert.vue组件
+//import the Alert.vue component
 import Alert from './Alert'
 export default {
   name: 'add',
@@ -64,14 +63,14 @@ export default {
     }
   },
   methods:{
-    //添加图书信息方法
+    //Add book info
   	addBook(e){
   		if(!this.book.name || !this.book.author || !this.book.description){
-  			
-  			this.alert = "请添加对应的信息！";
+
+  			this.alert = "Please fill the information！";
   		}else{
-        //创建新的图书信息，
-        var user = JSON.parse(localStorage.getItem('currentuser'))    
+        //Create a new book record
+        var user = JSON.parse(localStorage.getItem('currentuser'))
   			let newBook = {
   			  name:this.book.name,
           author:this.book.author,
@@ -82,16 +81,16 @@ export default {
           comments:[]
   			}
         console.log(user.name);
-            //数据请求，post到json-server接口
+        //Request the data，post to the "json-server" interface
   			this.$http.post("http://localhost:3000/books",newBook).then(function(response){
           console.log(response);
           user.booklist.push(response.body.id);
   				//console.log(response);
           this.$http.put("http://localhost:3000/users/"+user.id, user).then(function(response){
                 localStorage.setItem('currentuser', JSON.stringify(user));
-                alert("请求成功！")
+                alert("request done！")
               })
-  				this.$router.push({path:'/books',query:{alert:'新书添加成功！'}});
+  				this.$router.push({path:'/books',query:{alert:'Your book has been added！'}});
   			})
         e.preventDefault();
   		}
