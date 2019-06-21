@@ -30,9 +30,9 @@ Register and Login：Better fault-tolerant
 
 Optimization on loading/DOM/request
 
-Security promblem
+Security problem
 
-Transform backend from json-server to nodejs
+Backend nodejs
 
 Use mongoDB
 
