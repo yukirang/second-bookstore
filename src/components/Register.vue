@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="text" class="form-control" placeholder="author" v-model="user.password">
+        <input type="text" class="form-control" placeholder="password" v-model="user.password">
       </div>
       <div class="form-group">
         <label>Phone</label>
