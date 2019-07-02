@@ -20,7 +20,7 @@
              <ul class="nav navbar-nav">
               <li><router-link to="/add">Add a Book</router-link></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
   </nav>
   <div class="btn-gropp">
@@ -52,8 +52,8 @@
       <input type="text" v-model="message" class="form-control" placeholder="Add some comments..." required autofocus>
       <span class="btn btn-default" v-on:click="addComment(book.id)">Submit</span>
     </li>
-    <li class="list-group-item" v-for = "comments in book.comments">
-      <span>{{comments}}</span>
+    <li class="list-group-item" v-for = "comment in book.comments">
+      <span>{{comment}}</span>
     </li>
   </ul>
   </div>
@@ -62,90 +62,94 @@
 <script>
 export default {
   name: 'bookDetails',
-  data () {
+  data() {
     return {
-      book:{},
-      message:""
-    }
+      book: {},
+      message: ''
+    };
   },
-  created(){
+  created() {
     //Get the id and show at first
-  	this.fetchBooks(this.$route.params.id);
+    this.fetchBooks(this.$route.params.id);
     //console.log(user.name + this.book.creater);
-
   },
-  methods:{
+  methods: {
     //Get the info of a book with the id
-  	fetchBooks(id){
-      //console.log(id);
-      var user = JSON.parse(localStorage.getItem('currentuser')) ;
+    fetchBooks(id) {
+      var user = JSON.parse(localStorage.getItem('currentuser'));
       //Request data and set it to book
-      this.$http.get("http://localhost:3000/books/" + id).then(function(response){
-        console.log(response);
-        this.book = response.body;
-        if(user.name == this.book.creater){
-        document.getElementById("req-user").style.display = "block";
-        }
-      })
+      this.$http
+        .get('http://localhost:3000/books/' + id)
+        .then(function(response) {
+          console.log(response);
+          this.book = response.body;
+          if (user.name == this.book.creater) {
+            document.getElementById('req-user').style.display = 'block';
+          }
+        });
     },
-    requestBook(id){
-      var user = JSON.parse(localStorage.getItem('currentuser')) ;
-      this.$http.get("http://localhost:3000/books/" + id).then(function(response){
-         this.book = response.body;
-         var reqList = this.book.requestList;
-         if(reqList.some(function(item){
-
-
-            if(item.name == user.name){
-              return true;
-            }
-         }) == false && user.name != this.book.creater){
+    requestBook(id) {
+      var user = JSON.parse(localStorage.getItem('currentuser'));
+      this.$http
+        .get('http://localhost:3000/books/' + id)
+        .then(function(response) {
+          this.book = response.body;
+          var reqList = this.book.requestList;
+          if (
+            reqList.some(function(item) {
+              if (item.name == user.name) {
+                return true;
+              }
+            }) == false &&
+            user.name != this.book.creater
+          ) {
             var requestUser = {
               name: user.name,
               email: user.email
-            }
+            };
             reqList.push(requestUser);
 
-            this.$http.put("http://localhost:3000/books/"+id, this.book).then(function(response){
-               user.requestList.push(this.book.id);
-              this.$http.put("http://localhost:3000/users/"+user.id, user).then(function(response){
-                localStorage.setItem('currentuser', JSON.stringify(user));
-                alert("Request succeeded！")
-              })
-            })
-         }else if(user.name == this.book.creater){
+            this.$http
+              .put('http://localhost:3000/books/' + id, this.book)
+              .then(function(response) {
+                user.requestList.push(this.book.id);
+                this.$http
+                  .put('http://localhost:3000/users/' + user.id, user)
+                  .then(function(response) {
+                    localStorage.setItem('currentuser', JSON.stringify(user));
+                    alert('Request succeeded！');
+                  });
+              });
+          } else if (user.name == this.book.creater) {
             alert("You can't purchase your own book！");
-         }else{
-            alert("You have requested to buy this book!");
-         }
-      })
+          } else {
+            alert('You have requested to buy this book!');
+          }
+        });
     },
-    showCommentInput(){
-        document.getElementById("comment").style.display = "block";
+    showCommentInput() {
+      document.getElementById('comment').style.display = 'block';
     },
-    addComment(id){
+    addComment(id) {
       this.book.comments.push(this.message.trim());
-      this.$http.put("http://localhost:3000/books/"+id, this.book).then(function(response){
-         document.getElementById("comment").style.display = "none";
-      })
-
+      this.$http
+        .put('http://localhost:3000/books/' + id, this.book)
+        .then(function(response) {
+          document.getElementById('comment').style.display = 'none';
+        });
     }
-    }
-}
+  }
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#book-img{
-  width:30%;
+#book-img {
+  width: 30%;
 }
-#comment{
+#comment {
   display: none;
 }
-#req-user{
+#req-user {
   display: none;
 }
-
-
-
 </style>

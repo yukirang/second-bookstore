@@ -20,14 +20,14 @@
              <ul class="nav navbar-nav">
               <li><router-link to="/add">Add a Book</router-link></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
     </nav>
     <h1 class="page-header"><strong>Book List</strong></h1>
      <div class="album py-5 bg-light">
         <div class="container">
           <div class="row">
-            <div class="col-md-3" v-for="book in books">
+            <div class="col-md-3" v-for="book in books" v-bind:key="book.id">
               <div class="box-shadow img-box">
                 <img  v-bind:src = book.img>
                 <div class="book-body">
@@ -49,39 +49,39 @@
 <script>
 export default {
   name: 'books',
-  data () {
+  data() {
     return {
-      books:[]
-    }
+      books: []
+    };
   },
-  methods:{
-    fetchBooks(){
-      this.$http.get("http://localhost:3000/books").
-      then(function(response){
+  methods: {
+    fetchBooks() {
+      this.$http.get('http://localhost:3000/books').then(function(response) {
         this.books = response.body;
-      })
+      });
     }
   },
-  created(){
+  created() {
     this.fetchBooks();
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.img-box{
+.img-box {
   padding-top: 2%;
   margin-bottom: 25px;
 }
-img{
+img {
   height: 200px;
   width: 180px;
-  display:block;
-  margin:2% auto;
+  display: block;
+  margin: 2% auto;
 }
-.view{
-  color:#666666;
+.view {
+  color: #666666;
 }
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
 </style>

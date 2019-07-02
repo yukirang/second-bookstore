@@ -29,43 +29,49 @@
 <script>
 export default {
   name: 'login',
-  data () {
+  data() {
     return {
-      user:{},
-      alert:""
-    }
+      user: {},
+      alert: ''
+    };
   },
-  methods:{
-    register(){
-      if(!this.user.name || !this.user.password || !this.user.phone ||!this.user.email){
-        alert("Please fill the information!");
-      }else{
+  methods: {
+    register() {
+      if (
+        !this.user.name ||
+        !this.user.password ||
+        !this.user.phone ||
+        !this.user.email
+      ) {
+        alert('Please fill the information!');
+      } else {
         let newUser = {
-        "name": this.user.name,
-        "password":this.user.password,
-        "phone": this.user.phone,
-        "email": this.user.email,
-        "type": "user",
-        "booklist": [],
-        "requestList": []
-        }
-            //data request，post到json-server接口，第二个参数就是创建的新的用户信息，成功后跳转到主页并传递alert内容进行提示,添加成功后，db.json中也会添加上相应的内容
-        this.$http.post("http://localhost:3000/users",newUser).then(function(response){
-          // console.log(response);
-          alert('You have registered a new account！')
-          this.$router.push({path:'/'});
-        })
+          name: this.user.name,
+          password: this.user.password,
+          phone: this.user.phone,
+          email: this.user.email,
+          type: 'user',
+          booklist: [],
+          requestList: []
+        };
+        //data request，post to the json-server api to create a new user
+        this.$http
+          .post('http://localhost:3000/users', newUser)
+          .then(function(response) {
+            // console.log(response);
+            alert('You have registered a new account！');
+            this.$router.push({ path: '/' });
+          });
         e.preventDefault();
       }
       e.preventDefault();
     }
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#login-cont{
+#login-cont {
   padding: 15% 30%;
 }
 </style>

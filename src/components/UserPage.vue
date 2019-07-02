@@ -20,7 +20,7 @@
              <ul class="nav navbar-nav">
               <li><router-link to="/add">Add a Book</router-link></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </nav>
   <h1 class="page-header">
@@ -33,11 +33,11 @@
   </ul>
   <h3>My Books</h3>
   <ul class="list-group">
-    <li class="list-group-item" v-for="idmine in user.booklist"> <router-link class="btn btn-sm btn-outline-secondary view" v-bind:to="'/books/' + idmine">{{book[idmine-1].name}}</router-link></li>
+    <li class="list-group-item" v-for="id_mine in user.booklist"> <router-link class="btn btn-sm btn-outline-secondary view" v-bind:to="'/books/' + id_mine">{{book[id_mine-1].name}}</router-link></li>
   </ul>
   <h3>My Requests</h3>
   <ul class="list-group">
-    <li class="list-group-item" v-for="idreq in user.requestList"><router-link class="btn btn-sm btn-outline-secondary view" v-bind:to="'/books/' + idreq">{{book[idreq-1].name}}</router-link></li>
+    <li class="list-group-item" v-for="id_req in user.requestList"><router-link class="btn btn-sm btn-outline-secondary view" v-bind:to="'/books/' + id_req">{{book[id_req-1].name}}</router-link></li>
   </ul>
   </div>
 </template>
@@ -45,36 +45,31 @@
 <script>
 export default {
   name: 'userPage',
-  data () {
+  data() {
     return {
-      user:{},
-      book:""
-    }
+      user: {},
+      book: ''
+    };
   },
-  created(){
+  created() {
     //Get the id and show at first
-    this.user = JSON.parse(localStorage.getItem('currentuser')) ;
+    this.user = JSON.parse(localStorage.getItem('currentuser'));
     console.log(this.user);
     this.fetchBooks();
   },
-  methods:{
+  methods: {
     //Get the info of a book with the id
-    fetchBooks(){
-      //console.log(id);
+    fetchBooks() {
       //Request data and set it to book
-      this.$http.get("http://localhost:3000/books/").then(function(response){
+      this.$http.get('http://localhost:3000/books/').then(function(response) {
         this.book = response.body;
-      })
+      });
     }
   }
-}
+};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#book-img{
-  width:30%;
+#book-img {
+  width: 30%;
 }
-
-
 </style>

@@ -20,11 +20,11 @@
              <ul class="nav navbar-nav">
               <li><router-link to="/add">Add a Book</router-link></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </nav>
   <Alert v-if="alert" v-bind:message="alert"></Alert>
-    <!--标题-->
+    <!--title-->
 	<h1 class="page-header">Add a book</h1>
 	<form v-on:submit="addBook">
 		<div class="well">
@@ -53,57 +53,60 @@
 
 <script>
 //import the Alert.vue component
-import Alert from './Alert'
+import Alert from './Alert';
 export default {
   name: 'add',
-  data () {
+  data() {
     return {
-      book:{},
-      alert:""
-    }
+      book: {},
+      alert: ''
+    };
   },
-  methods:{
+  methods: {
     //Add book info
-  	addBook(e){
-  		if(!this.book.name || !this.book.author || !this.book.description){
-
-  			this.alert = "Please fill the information！";
-  		}else{
+    addBook(e) {
+      if (!this.book.name || !this.book.author || !this.book.description) {
+        this.alert = 'Please fill the information！';
+      } else {
         //Create a new book record
-        var user = JSON.parse(localStorage.getItem('currentuser'))
-  			let newBook = {
-  			  name:this.book.name,
-          author:this.book.author,
-          description:this.book.description,
-          img:"../static/images/"+this.book.img,
+        var user = JSON.parse(localStorage.getItem('currentuser'));
+        let newBook = {
+          name: this.book.name,
+          author: this.book.author,
+          description: this.book.description,
+          img: '../static/images/' + this.book.img,
           creater: user.name,
-          requestList:[],
-          comments:[]
-  			}
+          requestList: [],
+          comments: []
+        };
         console.log(user.name);
         //Request the data，post to the "json-server" interface
-  			this.$http.post("http://localhost:3000/books",newBook).then(function(response){
-          console.log(response);
-          user.booklist.push(response.body.id);
-  				//console.log(response);
-          this.$http.put("http://localhost:3000/users/"+user.id, user).then(function(response){
+        this.$http
+          .post('http://localhost:3000/books', newBook)
+          .then(function(response) {
+            console.log(response);
+            user.booklist.push(response.body.id);
+            this.$http
+              .put('http://localhost:3000/users/' + user.id, user)
+              .then(function(response) {
                 localStorage.setItem('currentuser', JSON.stringify(user));
-                alert("request done！")
-              })
-  				this.$router.push({path:'/books',query:{alert:'Your book has been added！'}});
-  			})
+                alert('request done！');
+              });
+            this.$router.push({
+              path: '/books',
+              query: { alert: 'Your book has been added！' }
+            });
+          });
         e.preventDefault();
-  		}
-  		e.preventDefault();
-  	}
+      }
+      e.preventDefault();
+    }
   },
-  components:{
-  	Alert
+  components: {
+    Alert
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

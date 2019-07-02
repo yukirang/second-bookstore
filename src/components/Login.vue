@@ -7,11 +7,7 @@
         <input type="username" v-model="username" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" v-model="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <!--div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div-->
+       
         <span class="btn btn-lg " v-on:click="Login">Login</span>
         <router-link class="btn btn-lg " to="/register">Register</router-link>
       </form>
@@ -23,41 +19,49 @@
 <script>
 export default {
   name: 'login',
-  data () {
+  data() {
     return {
-      user:"",
-      username: "",
-      password: ""
-    }
+      user: '',
+      username: '',
+      password: ''
+    };
   },
-  methods:{
-    Login(){
-      this.$http.get("http://localhost:3000/users/?t=" +new Date().getTime()+ "&name=" + this.username).then(function(response){
-        console.log(response)
-        this.user = response.body[0];
-        if(this.user)
-        {
-
-          if(this.user.password == this.password){
-           localStorage.setItem('currentuser', JSON.stringify(this.user));
-           this.$router.push({path:'/books',query:{alert:'You have logged in.'}});
-          }else{
-            alert("Sorry, wrong password！");
+  methods: {
+    Login() {
+      this.$http
+        .get(
+          'http://localhost:3000/users/?t=' +
+            new Date().getTime() +
+            '&name=' +
+            this.username
+        )
+        .then(function(response) {
+          console.log(response);
+          this.user = response.body[0];
+          if (this.user) {
+            if (this.user.password == this.password) {
+              localStorage.setItem('currentuser', JSON.stringify(this.user));
+              this.$router.push({
+                path: '/books',
+                query: { alert: 'You have logged in.' }
+              });
+            } else {
+              alert('Sorry, wrong password！');
+            }
+          } else {
+            alert('Username not exists!');
           }
-        }else{
-          alert("Username not exists!");
-        }
-      }).catch(function(){
-        console.log("GET error!")
-      })
+        })
+        .catch(function() {
+          console.log('GET error!');
+        });
     }
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#login-cont{
+#login-cont {
   padding: 15% 30%;
 }
 </style>
