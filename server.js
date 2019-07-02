@@ -1,9 +1,8 @@
 const express = require('express');
 const path = require('path');
-const serveStatic = require('serve-static');
 
 let app = express();
-app.use(serveStatic(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist'));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
