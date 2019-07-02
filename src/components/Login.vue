@@ -30,7 +30,7 @@ export default {
     Login() {
       this.$http
         .get(
-          'http://localhost:3000/users/?t=' +
+          'https://json-server-bookstore.herokuapp.com/users/?t=' +
             new Date().getTime() +
             '&name=' +
             this.username

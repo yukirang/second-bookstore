@@ -82,12 +82,15 @@ export default {
         console.log(user.name);
         //Request the data，post to the "json-server" interface
         this.$http
-          .post('http://localhost:3000/books', newBook)
+          .post('https://json-server-bookstore.herokuapp.com/books', newBook)
           .then(function(response) {
             console.log(response);
             user.booklist.push(response.body.id);
             this.$http
-              .put('http://localhost:3000/users/' + user.id, user)
+              .put(
+                'https://json-server-bookstore.herokuapp.com/users/' + user.id,
+                user
+              )
               .then(function(response) {
                 localStorage.setItem('currentuser', JSON.stringify(user));
                 alert('request done！');

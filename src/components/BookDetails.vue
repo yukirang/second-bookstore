@@ -79,7 +79,7 @@ export default {
       var user = JSON.parse(localStorage.getItem('currentuser'));
       //Request data and set it to book
       this.$http
-        .get('http://localhost:3000/books/' + id)
+        .get('https://json-server-bookstore.herokuapp.com/books/' + id)
         .then(function(response) {
           console.log(response);
           this.book = response.body;
@@ -91,7 +91,7 @@ export default {
     requestBook(id) {
       var user = JSON.parse(localStorage.getItem('currentuser'));
       this.$http
-        .get('http://localhost:3000/books/' + id)
+        .get('https://json-server-bookstore.herokuapp.com/books/' + id)
         .then(function(response) {
           this.book = response.body;
           var reqList = this.book.requestList;
@@ -110,11 +110,18 @@ export default {
             reqList.push(requestUser);
 
             this.$http
-              .put('http://localhost:3000/books/' + id, this.book)
+              .put(
+                'https://json-server-bookstore.herokuapp.com/books/' + id,
+                this.book
+              )
               .then(function(response) {
                 user.requestList.push(this.book.id);
                 this.$http
-                  .put('http://localhost:3000/users/' + user.id, user)
+                  .put(
+                    'https://json-server-bookstore.herokuapp.com/users/' +
+                      user.id,
+                    user
+                  )
                   .then(function(response) {
                     localStorage.setItem('currentuser', JSON.stringify(user));
                     alert('Request succeeded！');
@@ -133,7 +140,10 @@ export default {
     addComment(id) {
       this.book.comments.push(this.message.trim());
       this.$http
-        .put('http://localhost:3000/books/' + id, this.book)
+        .put(
+          'https://json-server-bookstore.herokuapp.com/books/' + id,
+          this.book
+        )
         .then(function(response) {
           document.getElementById('comment').style.display = 'none';
         });

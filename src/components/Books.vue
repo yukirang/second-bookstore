@@ -56,9 +56,11 @@ export default {
   },
   methods: {
     fetchBooks() {
-      this.$http.get('http://localhost:3000/books').then(function(response) {
-        this.books = response.body;
-      });
+      this.$http
+        .get('https://json-server-bookstore.herokuapp.com/books')
+        .then(function(response) {
+          this.books = response.body;
+        });
     }
   },
   created() {

@@ -56,7 +56,7 @@ export default {
         };
         //data request，post to the json-server api to create a new user
         this.$http
-          .post('http://localhost:3000/users', newUser)
+          .post('https://json-server-bookstore.herokuapp.com/users', newUser)
           .then(function(response) {
             // console.log(response);
             alert('You have registered a new account！');

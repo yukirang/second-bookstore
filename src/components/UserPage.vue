@@ -61,9 +61,11 @@ export default {
     //Get the info of a book with the id
     fetchBooks() {
       //Request data and set it to book
-      this.$http.get('http://localhost:3000/books/').then(function(response) {
-        this.book = response.body;
-      });
+      this.$http
+        .get('https://json-server-bookstore.herokuapp.com/books')
+        .then(function(response) {
+          this.book = response.body;
+        });
     }
   }
 };
