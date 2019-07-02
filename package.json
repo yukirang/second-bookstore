@@ -6,11 +6,12 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "build": "node build/build.js"
+    "start": "node server.js",
+    "build": "node build/build.js",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "vue": "^2.5.2",
@@ -33,7 +34,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cors": "^2.8.5",
     "css-loader": "^2.1.1",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^4.0.0-beta.5",
