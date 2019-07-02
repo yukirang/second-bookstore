@@ -8,7 +8,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" v-model="password" id="inputPassword" class="form-control" placeholder="Password" required>
        
-        <span class="btn btn-lg " v-on:click="Login">Login</span>
+        <span class="btn btn-lg " v-on:click="login">Login</span>
         <router-link class="btn btn-lg " to="/register">Register</router-link>
       </form>
 
@@ -27,7 +27,7 @@ export default {
     };
   },
   methods: {
-    Login() {
+    login() {
       this.$http
         .get(
           'https://json-server-bookstore.herokuapp.com/users/?t=' +

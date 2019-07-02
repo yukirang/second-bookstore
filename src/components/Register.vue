@@ -20,7 +20,7 @@
         <label>Email</label>
         <input type="text" class="form-control" placeholder="email" v-model="user.email">
       </div>
-      <button class="btn btn-primary" type="submit">Register</button>
+      <span class="btn btn-primary" v-on:click="register">Register</span>
     </div>
   </form>
   </div>
@@ -54,17 +54,18 @@ export default {
           booklist: [],
           requestList: []
         };
+        console.log(newUser);
         //data request，post to the json-server api to create a new user
         this.$http
           .post('https://json-server-bookstore.herokuapp.com/users', newUser)
           .then(function(response) {
-            // console.log(response);
-            alert('You have registered a new account！');
-            this.$router.push({ path: '/' });
+            console.log(response.json());
+            alert('You have registered a new account.');
+            this.$router.push({
+              path: '/'
+            });
           });
-        e.preventDefault();
       }
-      e.preventDefault();
     }
   }
 };
