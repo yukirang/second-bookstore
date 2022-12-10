@@ -11,7 +11,7 @@
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "vue": "^2.5.2",
